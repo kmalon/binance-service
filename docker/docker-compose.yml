@@ -1,0 +1,60 @@
+version: '3'
+
+services:
+  client:
+    image: microservice/client:${CLIENT_VERSION}
+    container_name: client
+    build:
+      context: ../client/docker
+      dockerfile: Dockerfile
+      args:
+        SERVICE_JAR_NAME: client-microservice
+    ports:
+      - 8082:8082
+    env_file:
+      - .def-app.env
+    networks:
+      cloud:
+
+  db:
+    image: postgres
+    container_name: db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: keycloak
+      POSTGRES_USER: keycloak
+      POSTGRES_PASSWORD: ${POSTGRES_PASS}
+    networks:
+      cloud:
+
+  keycloak:
+    image: jboss/keycloak
+    container_name: keycloak
+    environment:
+      DB_VENDOR: POSTGRES
+      DB_ADDR: db
+      DB_DATABASE: keycloak
+      DB_USER: keycloak
+      DB_SCHEMA: public
+      DB_PASSWORD: ${KECYCLOAK_DB_PASS}
+      KEYCLOAK_USER: admin
+      KEYCLOAK_PASSWORD: ${KECYCLOAK_PASS}
+    ports:
+      - 8080:8080
+    depends_on:
+      - db
+    networks:
+      cloud:
+        ipv4_address: 192.168.0.205
+
+volumes:
+  postgres_data:
+    driver: local
+
+networks:
+  cloud:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.0.0/24

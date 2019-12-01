@@ -1,0 +1,23 @@
+server:
+  port: 8081
+
+keycloak:
+  auth-server-url: http://localhost:8080/auth/
+  realm: km
+  resource: client-app
+  use-resource-role-mappings: true
+
+---
+spring:
+  profiles: dev
+server:
+  port: 8082
+
+keycloak:
+  auth-server-url: http://${KEYCLOAK_HOST}:8080/auth/
+
+logging:
+  level:
+    org:
+      springframework:
+        security: DEBUG
