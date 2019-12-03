@@ -7,6 +7,17 @@ keycloak:
   resource: client-app
   use-resource-role-mappings: true
 
+allegro:
+  url:
+    base: https://api.allegro.pl.allegrosandbox.pl/
+  clientId: 8444ef4ad85d42afba183d7911303691
+#  clientId: ${ALLEGRO_CLIENT_ID}
+  clientSecret: VrLDlS0ANaDmAob4PdocG0emM3WjWA74Wngk0UkDDZ9KoPzorWqfg5xAFLHqvry3
+#  clientSecret: ${ALLEGRO_SECRET}
+  accessTokenUri: https://allegro.pl.allegrosandbox.pl/auth/oauth/token
+  grant-type: client_credentials
+  tokenName: access_token
+
 ---
 spring:
   profiles: dev
