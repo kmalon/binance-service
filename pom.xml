@@ -55,6 +55,14 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>Edgware.SR6</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <dependency>
                 <groupId>org.keycloak.bom</groupId>
                 <artifactId>keycloak-adapter-bom</artifactId>
                 <version>3.3.0.Final</version>
