@@ -12,11 +12,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/auth")
 public class AuthClientController {
-    private static final Logger LOGGER = LoggerFactory.getLogger(AuthClientController.class);
 
     @GetMapping(path = "/test")
-    public ResponseEntity authTest() {
-        LOGGER.info("User authenticated");
+    public ResponseEntity<String> authTest() {
+        log.info("User authenticated");
         return ResponseEntity.ok("authenticated");
     }
 }

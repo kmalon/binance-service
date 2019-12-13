@@ -1,4 +1,4 @@
-package pl.km.client.binance.domain.exchange.common;
+package pl.km.client.binance.domain.exchange.general;
 
 /**
  * Stymbol status in exchange
