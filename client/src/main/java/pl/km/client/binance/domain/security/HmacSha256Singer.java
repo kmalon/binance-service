@@ -2,7 +2,7 @@ package pl.km.client.binance.domain.security;
 
 import com.google.common.hash.HashFunction;
 import com.google.common.hash.Hashing;
-import pl.km.client.binance.domain.request.SecuredRequestParams;
+import pl.km.client.binance.domain.request.SecuredRequestQueryParams;
 
 /**
  * Singe request params provided security key with HmacSha256 algorithm
@@ -17,9 +17,9 @@ public class HmacSha256Singer {
      * @param requestParams
      * @return signature of provided params
      */
-    public static String sing(BinanceSecretKey binanceSecretKey, SecuredRequestParams requestParams) {
+    public static String sing(BinanceSecretKey binanceSecretKey, SecuredRequestQueryParams requestParams) {
         HashFunction hmacSha256 = Hashing.hmacSha256(binanceSecretKey.toBytes());
-        String signature = hmacSha256.hashBytes(requestParams.getRequestParamsBytes()).toString();
+        String signature = hmacSha256.hashBytes(requestParams.getRequestQueryParamsStringUrlAsBytes()).toString();
         binanceSecretKey.destroy();
         return signature;
     }

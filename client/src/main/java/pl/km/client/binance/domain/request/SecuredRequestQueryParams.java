@@ -1,18 +1,19 @@
 package pl.km.client.binance.domain.request;
 
 import pl.km.client.binance.domain.security.BinanceSecretKey;
+import pl.km.client.binance.domain.security.HmacSha256Singer;
 
 import java.util.LinkedHashMap;
 
 /**
  * Request params used for secured endpoints where signature is required
  */
-public interface SecuredRequestParams extends RequestParams {
+public interface SecuredRequestQueryParams extends RequestQueryParams {
 
     /**
      * @return byte[] of params presented as: filed1=valueField1&field2=valueField2
      */
-    default byte[] getRequestParamsBytes() {
+    default byte[] getRequestQueryParamsStringUrlAsBytes() {
         StringBuilder sb = new StringBuilder();
         LinkedHashMap<String, String> params = this.getParams();
         int paramsSize = params.size() - 1;
@@ -32,5 +33,8 @@ public interface SecuredRequestParams extends RequestParams {
      *
      * @param binanceSecretKey for signing purposes
      */
-    void addSignature(BinanceSecretKey binanceSecretKey);
+    default void addSignature(BinanceSecretKey binanceSecretKey) {
+        String signature = HmacSha256Singer.sing(binanceSecretKey, this);
+        this.getParams().put(DefaultsParams.SIGNATURE, signature);
+    }
 }

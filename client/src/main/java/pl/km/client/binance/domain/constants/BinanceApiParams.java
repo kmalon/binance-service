@@ -1,9 +1,13 @@
 package pl.km.client.binance.domain.constants;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
 /**
  * Contains query and request params names for Binance API REST
  */
-public class BinanceApiParams {
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+public final class BinanceApiParams {
     /**
      * API REST secret key for secured endpoints used for singing requests parameters passed into REST API via
      * the signature query param (case sensitive)

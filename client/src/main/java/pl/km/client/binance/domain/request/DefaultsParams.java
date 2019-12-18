@@ -1,9 +1,13 @@
 package pl.km.client.binance.domain.request;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
 /**
  * Defaults values of requests
  */
-public class DefaultsParams {
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+public final class DefaultsParams {
     /**
      * params separator e.g filed1=value1<SEPARATOR>field2=value2
      */
@@ -21,6 +25,11 @@ public class DefaultsParams {
      * Name of param with signature
      */
     public static final String SIGNATURE = "signature";
+
+    /**
+     * Name of symbol param
+     */
+    public static final String SYMBOL = "symbol";
     /**
      * Default value of recvWindow param, specify the number of milliseconds after serverTime the request is valid for.
      */

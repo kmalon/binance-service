@@ -22,6 +22,22 @@ binance:
 
 ---
 spring:
+  profiles: local
+feign:
+  client:
+    config:
+      default:
+        loggerLevel: FULL
+
+logging:
+  level:
+    pl:
+      km:
+        client:
+          binance:
+            infrastructure: DEBUG
+---
+spring:
   profiles: dev
 server:
   port: 8082

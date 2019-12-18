@@ -2,13 +2,14 @@ package pl.km.client.binance.domain.exchange.general;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
+import lombok.Value;
 
 import java.util.List;
 
 /**
  * Current exchange trading rules and symbol information
  */
-@Data
+@Value
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ExchangeInfo {
     private String timezone;
