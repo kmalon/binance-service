@@ -1,0 +1,11 @@
+package pl.km.binance.api.domain.exchange.account;
+
+import java.util.List;
+
+public class OrderList {
+    private int orderListId;
+    private ContingencyType contingencyType;
+
+
+    private List<Order> orders;
+}

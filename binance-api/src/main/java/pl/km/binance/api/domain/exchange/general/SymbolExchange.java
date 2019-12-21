@@ -1,4 +1,4 @@
-package pl.km.client.binance.domain.exchange.general;
+package pl.km.binance.api.domain.exchange.general;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Value;

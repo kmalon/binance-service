@@ -6,9 +6,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import pl.km.client.binance.domain.exchange.account.Trades;
-import pl.km.client.binance.domain.security.BinanceSecretKey;
-import pl.km.client.binance.infrastructure.BinanceApiPort;
+import pl.km.binance.api.domain.exchange.account.Trades;
+import pl.km.binance.api.domain.security.BinanceSecretKey;
+import pl.km.binance.api.infrastructure.BinanceApiRestClientAdapter;
 
 import java.util.List;
 
@@ -17,10 +17,10 @@ import java.util.List;
 @RequestMapping("/public")
 public class ClientController {
 
-    private BinanceApiPort binanceApiPort;
+    private pl.km.binance.api.infrastructure.BinanceApiPort binanceApiPort;
 
-    public ClientController(BinanceApiPort binanceApiPort) {
-        this.binanceApiPort = binanceApiPort;
+    public ClientController() {
+        this.binanceApiPort = new BinanceApiRestClientAdapter("https://api.binance.com/api/v3");
     }
 
     @GetMapping(path = "/noauth")
