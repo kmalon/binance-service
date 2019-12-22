@@ -1,7 +1,5 @@
 package pl.km.binance.api.domain.request.base;
 
-import pl.km.binance.api.domain.time.BinanceTime;
-
 import java.util.LinkedHashMap;
 
 /**

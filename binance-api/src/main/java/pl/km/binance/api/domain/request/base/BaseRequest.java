@@ -5,7 +5,7 @@ import java.util.LinkedHashMap;
 /**
  * Base request - contains all query parameters which will be sent to endpoints
  */
-public abstract class BaseRequest implements RequestQueryParams {
+public class BaseRequest {
     /**
      * Request params in order of putting in
      */
@@ -21,24 +21,18 @@ public abstract class BaseRequest implements RequestQueryParams {
      * @param paramName
      * @param paramValue
      */
-    protected void addQueryParam(String paramName, String paramValue) {
+    public void addQueryParam(String paramName, String paramValue) {
         queryParams.put(paramName, paramValue);
     }
 
     /**
      * @param queryParams which have to be added to request query params
      */
-    protected void addQueryParams(LinkedHashMap<String, String> queryParams) {
+    public void addQueryParams(LinkedHashMap<String, String> queryParams) {
         this.queryParams.putAll(queryParams);
     }
 
-    /**
-     * Fill request param map which will be used during invoking Binance API REST requests
-     */
-    protected abstract void fillParams();
-
-    @Override
     public LinkedHashMap<String, String> getParams() {
-        return this.queryParams;
+        return new LinkedHashMap<>(queryParams);
     }
 }

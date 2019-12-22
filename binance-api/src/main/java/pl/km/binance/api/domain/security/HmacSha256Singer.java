@@ -19,7 +19,7 @@ public class HmacSha256Singer {
      */
     public static String sing(BinanceSecretKey binanceSecretKey, SecuredRequestQueryParams requestParams) {
         HashFunction hmacSha256 = Hashing.hmacSha256(binanceSecretKey.toBytes());
-        String signature = hmacSha256.hashBytes(requestParams.getRequestQueryParamsStringUrlAsBytes()).toString();
+        String signature = hmacSha256.hashBytes(requestParams.getRequestQueryParamsStringUrlBytes()).toString();
         binanceSecretKey.destroy();
         return signature;
     }

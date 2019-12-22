@@ -1,6 +1,6 @@
 package pl.km.binance.api.domain.time;
 
-import pl.km.binance.api.infrastructure.BinanceApiPort;
+import pl.km.binance.api.infrastructure.BinanceApiRest;
 
 /**
  * Time of Binance Server
@@ -13,10 +13,10 @@ public class BinanceServerTime implements BinanceTime {
     /**
      * Binance REST API client for time synchronization
      */
-    private BinanceApiPort binanceApiPort;
+    private BinanceApiRest binanceApiRest;
 
-    public BinanceServerTime(BinanceApiPort binanceApiPort) {
-        this.binanceApiPort = binanceApiPort;
+    public BinanceServerTime(BinanceApiRest binanceApiRest) {
+        this.binanceApiRest = binanceApiRest;
         synchronizeBinanceTime();
     }
 
@@ -33,7 +33,7 @@ public class BinanceServerTime implements BinanceTime {
      * Synchronizing the Binance API server time by computing difference between local and Binance time
      */
     public void synchronizeBinanceTime() {
-        this.timeDifference = System.currentTimeMillis() - binanceApiPort.serverTime().getServerTime();
+        this.timeDifference = System.currentTimeMillis() - binanceApiRest.serverTime().getServerTime();
     }
 
 

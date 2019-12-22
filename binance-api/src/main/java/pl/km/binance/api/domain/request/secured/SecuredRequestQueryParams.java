@@ -11,12 +11,12 @@ import java.util.LinkedHashMap;
 public interface SecuredRequestQueryParams {
 
     /**
-     * @return request query params ordered in input order
+     * @return request query params with signature and for time set to current time
      */
-    LinkedHashMap<String, String> getParams(BinanceSecretKey binanceSecretKey, BinanceTime binanceTime);
+    LinkedHashMap<String, String> getParamsWithSignatureAndForCurrentTime(BinanceSecretKey binanceSecretKey, BinanceTime binanceTime);
 
     /**
      * @return byte[] of params presented as: filed1=valueField1&field2=valueField2
      */
-    byte[] getRequestQueryParamsStringUrlAsBytes();
+    byte[] getRequestQueryParamsStringUrlBytes();
 }
