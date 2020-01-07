@@ -19,6 +19,18 @@ binance:
   api:
     base-url: https://api.binance.com
     uri-prefix-with-version: /api/v3
+management:
+  endpoint:
+    metrics:
+      enabled: true
+  endpoints:
+    enabled-by-default: true
+    web:
+      exposure:
+        include: prometheus, info, metrics
+#        include: "*"
+  server:
+    port: 8085
 
 ---
 spring:
@@ -33,8 +45,8 @@ logging:
   level:
     pl:
       km:
-        client:
-          binance:
+        binance:
+          api:
             infrastructure: DEBUG
 ---
 spring:

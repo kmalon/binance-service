@@ -16,6 +16,19 @@ services:
     networks:
       cloud:
 
+  prom:
+    image: prom/prometheus
+    container_name: prom
+    ports:
+      - 9090:9090
+    volumes:
+      - ../prometheus/:/etc/prometheus/
+      - prometheus_data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+    networks:
+      cloud:
+
   db:
     image: postgres
     container_name: db
@@ -51,6 +64,7 @@ services:
 volumes:
   postgres_data:
     driver: local
+  prometheus_data: {}
 
 networks:
   cloud:
