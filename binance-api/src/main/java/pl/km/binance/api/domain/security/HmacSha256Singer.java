@@ -11,7 +11,6 @@ import pl.km.binance.api.domain.request.secured.SecuredRequestQueryParams;
 public class HmacSha256Singer {
     /**
      * Signing request params with secret key used for initialize hmacsha256 algorithm.
-     * After sign secret key is cleared from memory.
      *
      * @param binanceSecretKey
      * @param requestParams
@@ -19,8 +18,6 @@ public class HmacSha256Singer {
      */
     public static String sing(BinanceSecretKey binanceSecretKey, SecuredRequestQueryParams requestParams) {
         HashFunction hmacSha256 = Hashing.hmacSha256(binanceSecretKey.toBytes());
-        String signature = hmacSha256.hashBytes(requestParams.getRequestQueryParamsStringUrlBytes()).toString();
-        binanceSecretKey.destroy();
-        return signature;
+        return hmacSha256.hashBytes(requestParams.getRequestQueryParamsStringUrlBytes()).toString();
     }
 }

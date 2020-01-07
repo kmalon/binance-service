@@ -1,6 +1,7 @@
 package pl.km.binance.api.domain.exchange.general;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.Data;
 import lombok.Value;
 
 import java.util.List;
@@ -9,7 +10,7 @@ import java.util.List;
  * Exchange Symbol information
  * https://github.com/binance-exchange/binance-official-api-docs/blob/master/rest-api.md#exchange-information
  */
-@Value
+@Data
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class SymbolExchange {
     private Symbol symbol;

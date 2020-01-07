@@ -5,6 +5,7 @@ import feign.jackson.JacksonDecoder;
 import feign.jackson.JacksonEncoder;
 import feign.slf4j.Slf4jLogger;
 import org.springframework.cloud.openfeign.support.SpringMvcContract;
+import pl.km.binance.api.domain.error.BinanceErrorDecoder;
 import pl.km.binance.api.domain.exchange.account.AccountInfo;
 import pl.km.binance.api.domain.exchange.account.Trades;
 import pl.km.binance.api.domain.exchange.general.ExchangeInfo;
@@ -27,6 +28,7 @@ public class BinanceApiRestClient implements BinanceApiRest {
                 .decoder(new JacksonDecoder())
                 .contract(new SpringMvcContract())
                 .logger(new Slf4jLogger())
+                .errorDecoder(new BinanceErrorDecoder())
                 .target(BinanceApiRestFeignClient.class, binanceBaseUrl);
         this.binanceServerTime = new BinanceServerTime(this);
     }

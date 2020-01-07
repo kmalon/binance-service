@@ -1,12 +1,13 @@
 package pl.km.client.binance.domain.request
 
+
 import pl.km.binance.api.domain.request.AccountRequest
 import pl.km.binance.api.domain.request.DefaultsParams
 import pl.km.binance.api.domain.security.BinanceSecretKey
 import pl.km.binance.api.domain.time.BinanceTime
-import pl.km.client.binance.domain.request.SecuredRequestTest
+import spock.lang.Specification
 
-class AccountRequestTest extends SecuredRequestTest {
+class AccountRequestTest extends Specification {
 
     def "New created instance has required params"() {
         given:
