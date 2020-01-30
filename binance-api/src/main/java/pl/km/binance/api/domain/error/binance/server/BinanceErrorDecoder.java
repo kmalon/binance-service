@@ -1,4 +1,4 @@
-package pl.km.binance.api.domain.error;
+package pl.km.binance.api.domain.error.binance.server;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import feign.Response;
@@ -16,8 +16,8 @@ public class BinanceErrorDecoder implements ErrorDecoder {
     @SneakyThrows
     @Override
     public Exception decode(String methodKey, Response response) {
-        String responseBody = Util.toString(response.body().asReader());
-        ErrorResponse errorResponse = OBJECT_MAPPER.readValue(responseBody, ErrorResponse.class);
-        return new BinanceInvokeError(errorResponse.getErrorMessage());
+        var responseBody = Util.toString(response.body().asReader());
+        var binanceServerErrorResponse = OBJECT_MAPPER.readValue(responseBody, BinanceServerErrorResponse.class);
+        return new BinanceInvokeError(binanceServerErrorResponse.getErrorMessage());
     }
 }

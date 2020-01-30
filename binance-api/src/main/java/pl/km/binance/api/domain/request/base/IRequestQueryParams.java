@@ -5,7 +5,7 @@ import java.util.LinkedHashMap;
 /**
  * Getting requests query params needed for invoke Binance API REST endpoints.
  */
-public interface RequestQueryParams {
+public interface IRequestQueryParams {
     /**
      * @return request query params ordered in input order
      */

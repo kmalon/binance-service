@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import pl.km.binance.api.domain.exchange.account.AccountInfo;
 import pl.km.binance.api.domain.exchange.account.Trades;
 import pl.km.binance.api.domain.exchange.general.ExchangeInfo;
+import pl.km.binance.api.domain.exchange.general.ServerTime;
 import pl.km.binance.api.domain.request.AccountRequest;
 import pl.km.binance.api.domain.request.MyTradesRequest;
 import pl.km.binance.api.domain.security.BinanceSecretKey;
@@ -26,17 +27,21 @@ public class ClientController {
     private BinanceApiRest binanceApiRest;
 
     public ClientController(@Value("${binance.api.base-url}${binance.api.uri-prefix-with-version}") String binanceBaseUrl) {
-        this.binanceApiRest = new BinanceApiRestClient(binanceBaseUrl);
+        this.binanceApiRest = new BinanceApiRestClient(binanceBaseUrl,6000,6000);
     }
 
     @GetMapping(path = "/noauth")
-    public ResponseEntity<String> test(@RequestParam("api-key") String key, @RequestParam("sec-key") char[] seckey) {
+    public ResponseEntity<AccountInfo> test(@RequestParam("api-key") String key, @RequestParam("sec-key") char[] seckey) {
         log.info("User not authenticated");
         BinanceSecretKey binanceSecretKey = new BinanceSecretKey(seckey);
-        ExchangeInfo exchangeInfo = binanceApiRest.exchangeInfo();
-        AccountInfo accountInfo = binanceApiRest.getAccountInfo(binanceSecretKey, key, new AccountRequest());
-        List<Trades> userTrades = binanceApiRest.getUserTrades(binanceSecretKey, key, new MyTradesRequest("ETHBTC"));
+        ResponseEntity<Void> ping = binanceApiRest.ping();
+        ResponseEntity<ServerTime> objectResponseEntity = binanceApiRest.serverTime();
+        ResponseEntity<ExchangeInfo> exchangeInfoResponseEntity = binanceApiRest.exchangeInfo();
+        ResponseEntity<AccountInfo> accountInfo = binanceApiRest.getAccountInfo(binanceSecretKey, key, new AccountRequest());
+        ResponseEntity<List<Trades>> userTrades = binanceApiRest.getUserTrades(binanceSecretKey, key, new MyTradesRequest("ETHBTC"));
         binanceSecretKey.destroy();
-        return ResponseEntity.ok("Not authenticated");
+
+        return accountInfo;
+//        return ResponseEntity.ok("Not authenticated");
     }
 }

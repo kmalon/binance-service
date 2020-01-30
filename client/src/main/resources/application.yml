@@ -7,14 +7,6 @@ keycloak:
   resource: client-app
   use-resource-role-mappings: true
 
-feign:
-  client:
-    config:
-      default:
-        connectTimeout: 5000
-        readTimeout: 5000
-        loggerLevel: basic
-
 binance:
   api:
     base-url: https://api.binance.com

@@ -2,7 +2,7 @@ package pl.km.binance.api.domain.request.secured;
 
 import lombok.extern.slf4j.Slf4j;
 import pl.km.binance.api.domain.request.DefaultsParams;
-import pl.km.binance.api.domain.time.BinanceTime;
+import pl.km.binance.api.domain.time.IBinanceTime;
 
 import java.util.LinkedHashMap;
 import java.util.Objects;
@@ -37,7 +37,7 @@ public class TimingSecurityRequest {
         return recvWindow > DefaultsParams.RECV_WINDOW_MAX || recvWindow < 0;
     }
 
-    public LinkedHashMap<String, String> getTimeParamsForNow(BinanceTime binanceTime) {
+    public LinkedHashMap<String, String> getTimeParamsForNow(IBinanceTime binanceTime) {
         LinkedHashMap<String, String> params = new LinkedHashMap<>();
         params.put(DefaultsParams.TIMESTAMP, Long.toString(binanceTime.getBinanceTime()));
         params.put(DefaultsParams.RECV_WINDOW, Long.toString(recvWindow));

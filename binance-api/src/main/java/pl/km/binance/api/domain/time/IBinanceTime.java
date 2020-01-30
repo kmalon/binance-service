@@ -1,6 +1,6 @@
 package pl.km.binance.api.domain.time;
 
-public interface BinanceTime {
+public interface IBinanceTime {
     long getBinanceTime();
 
     void synchronizeBinanceTime();

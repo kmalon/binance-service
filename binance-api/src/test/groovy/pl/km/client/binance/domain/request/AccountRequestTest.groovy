@@ -4,7 +4,7 @@ package pl.km.client.binance.domain.request
 import pl.km.binance.api.domain.request.AccountRequest
 import pl.km.binance.api.domain.request.DefaultsParams
 import pl.km.binance.api.domain.security.BinanceSecretKey
-import pl.km.binance.api.domain.time.BinanceTime
+import pl.km.binance.api.domain.time.IBinanceTime
 import spock.lang.Specification
 
 class AccountRequestTest extends Specification {
@@ -13,11 +13,11 @@ class AccountRequestTest extends Specification {
         given:
         def request = new AccountRequest(13)
         def timestamp = 1500100900
-        def binanceTime = Stub(BinanceTime.class)
+        def binanceTime = Stub(IBinanceTime.class)
         def binanceSecretKey = new BinanceSecretKey("secret".toCharArray())
         when:
         binanceTime.getBinanceTime() >> timestamp
-        def params = request.getParamsWithSignatureAndForCurrentTime(binanceSecretKey, binanceTime)
+        def params = request.getParamsWithSignature(binanceSecretKey, binanceTime)
         then:
 //        timestamp, recvWindow, signature
         assert params.size() == 3
@@ -31,12 +31,12 @@ class AccountRequestTest extends Specification {
         def request = new AccountRequest(13)
         def timestampOne = 1500100900
         def timestampTwo = 1500100901
-        def binanceTime = Stub(BinanceTime.class)
+        def binanceTime = Stub(IBinanceTime.class)
         def binanceSecretKey = new BinanceSecretKey("secret".toCharArray())
         when:
         binanceTime.getBinanceTime() >>> [timestampOne, timestampTwo]
-        def paramsFirstInvoke = request.getParamsWithSignatureAndForCurrentTime(binanceSecretKey, binanceTime)
-        def paramsSecondInvoke = request.getParamsWithSignatureAndForCurrentTime(binanceSecretKey, binanceTime)
+        def paramsFirstInvoke = request.getParamsWithSignature(binanceSecretKey, binanceTime)
+        def paramsSecondInvoke = request.getParamsWithSignature(binanceSecretKey, binanceTime)
         then:
 //        timestamp, recvWindow, signature
         assert paramsFirstInvoke.size() == 3

@@ -20,29 +20,25 @@ import java.util.Map;
  * Binance REST API client for public endpoints
  * https://github.com/binance-exchange/binance-official-api-docs/blob/master/rest-api.md
  */
-interface BinanceApiRestFeignClient {
+@Headers({"Content-type", "application/json"})
+public interface BinanceApiRestFeignClient {
     /**
      * Test conectivity of the REST API
      *
      * @return
      */
-    @Headers("Content-Type: application/json")
     @RequestMapping(value = BinanceApiRestMappings.PING, method = RequestMethod.GET)
     ResponseEntity<Object> ping();
 
-    @Headers("Content-Type: application/json")
     @RequestMapping(value = BinanceApiRestMappings.SERVER_TIME, method = RequestMethod.GET)
-    ServerTime serverTime();
+    ResponseEntity<ServerTime> serverTime();
 
-    @Headers("Content-Type: application/json")
     @RequestMapping(value = BinanceApiRestMappings.EXCHANGE_INFO, method = RequestMethod.GET)
-    ExchangeInfo exchangeInfo();
+    ResponseEntity<ExchangeInfo> exchangeInfo();
 
-    @Headers("Content-Type: application/json")
     @RequestMapping(value = BinanceApiRestMappings.ACCOUNT_INFORMATIONS, method = RequestMethod.GET)
-    AccountInfo getAccountInfo(@SpringQueryMap Map<String, ?> params, @RequestHeader(value = BinanceApiHeaders.X_MBX_APIKEY) String apiKey);
+    ResponseEntity<AccountInfo> getAccountInfo(@SpringQueryMap Map<String, ?> params, @RequestHeader(value = BinanceApiHeaders.X_MBX_APIKEY) String apiKey);
 
-    @Headers("Content-Type: application/json")
     @RequestMapping(value = BinanceApiRestMappings.MY_TRADES, method = RequestMethod.GET)
-    List<Trades> getUserTrades(@SpringQueryMap Map<String, ?> params, @RequestHeader(value = BinanceApiHeaders.X_MBX_APIKEY) String apiKey);
+    ResponseEntity<List<Trades>> getUserTrades(@SpringQueryMap Map<String, ?> params, @RequestHeader(value = BinanceApiHeaders.X_MBX_APIKEY) String apiKey);
 }

@@ -2,8 +2,6 @@ package pl.km.client.binance.domain.request
 
 import pl.km.binance.api.domain.request.DefaultsParams
 import pl.km.binance.api.domain.request.secured.SecuredRequest
-import pl.km.binance.api.domain.security.BinanceSecretKey
-import pl.km.binance.api.domain.time.BinanceTime
 import spock.lang.Specification
 
 class SecuredRequestTest extends Specification {
@@ -15,7 +13,7 @@ class SecuredRequestTest extends Specification {
         securedRequest.addQueryParam("field1", "value1")
         securedRequest.addQueryParam("field2", "value2")
         when:
-        def queryParamsByte = securedRequest.getRequestQueryParamsStringUrlBytes()
+        def queryParamsByte = securedRequest.getUrlPathParams()
         then:
         assert new String(queryParamsByte).equals(queryParamsString)
     }

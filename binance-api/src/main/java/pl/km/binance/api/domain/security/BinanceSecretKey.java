@@ -8,7 +8,7 @@ import java.util.Arrays;
 /**
  * Binance secret key required for singing requests
  */
-public class BinanceSecretKey {
+public class BinanceSecretKey implements ISecretKey {
     /**
      * Binance Api secretKey related to user
      */
@@ -27,6 +27,7 @@ public class BinanceSecretKey {
     /**
      * @return byte array of secret key
      */
+    @Override
     public byte[] toBytes() {
         return byteKey;
     }
@@ -34,6 +35,7 @@ public class BinanceSecretKey {
     /**
      * Overwrite secret key and byte[] representation with '*'
      */
+    @Override
     public void destroy() {
         Arrays.fill(key, '*');
         Arrays.fill(byteKey, (byte) '*');

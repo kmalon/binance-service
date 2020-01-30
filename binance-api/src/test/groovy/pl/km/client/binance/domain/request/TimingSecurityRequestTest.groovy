@@ -2,13 +2,13 @@ package pl.km.client.binance.domain.request
 
 import pl.km.binance.api.domain.request.DefaultsParams
 import pl.km.binance.api.domain.request.secured.TimingSecurityRequest
-import pl.km.binance.api.domain.time.BinanceTime
+import pl.km.binance.api.domain.time.IBinanceTime
 import spock.lang.Specification
 import spock.lang.Unroll
 
 class TimingSecurityRequestTest extends Specification {
 
-    def binanceTime = Stub(BinanceTime.class)
+    def binanceTime = Stub(IBinanceTime.class)
     def timestamp = 1500100900
 
     @Unroll

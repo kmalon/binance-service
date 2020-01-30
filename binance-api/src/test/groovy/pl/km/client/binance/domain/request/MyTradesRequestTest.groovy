@@ -3,7 +3,7 @@ package pl.km.client.binance.domain.request
 import pl.km.binance.api.domain.request.DefaultsParams
 import pl.km.binance.api.domain.request.MyTradesRequest
 import pl.km.binance.api.domain.security.BinanceSecretKey
-import pl.km.binance.api.domain.time.BinanceTime
+import pl.km.binance.api.domain.time.IBinanceTime
 import spock.lang.Specification
 
 class MyTradesRequestTest extends Specification {
@@ -11,11 +11,11 @@ class MyTradesRequestTest extends Specification {
         given:
         def request = new MyTradesRequest(13, "ETHBTC")
         def timestamp = 1500100900
-        def binanceTime = Stub(BinanceTime.class)
+        def binanceTime = Stub(IBinanceTime.class)
         def binanceSecretKey = new BinanceSecretKey("secret".toCharArray())
         when:
         binanceTime.getBinanceTime() >> timestamp
-        def params = request.getParamsWithSignatureAndForCurrentTime(binanceSecretKey, binanceTime)
+        def params = request.getParamsWithSignature(binanceSecretKey, binanceTime)
         then:
         //symbol, recvWindow(default), timestamp, signature
         assert params.size() == 4
@@ -29,11 +29,11 @@ class MyTradesRequestTest extends Specification {
         given:
         def requestBuilder = MyTradesRequest.builder("ETHBTC").limit(10).fromId(45).build()
         def timestamp = 1500100900
-        def binanceTime = Stub(BinanceTime.class)
+        def binanceTime = Stub(IBinanceTime.class)
         def binanceSecretKey = new BinanceSecretKey("secret".toCharArray())
         when:
         binanceTime.getBinanceTime() >> timestamp
-        def params = requestBuilder.getParamsWithSignatureAndForCurrentTime(binanceSecretKey, binanceTime)
+        def params = requestBuilder.getParamsWithSignature(binanceSecretKey, binanceTime)
         then:
         //symbol, recvWindow(default), timestamp, signature, limit, fromId
         assert params.size() == 6
@@ -43,17 +43,17 @@ class MyTradesRequestTest extends Specification {
         assert params.containsKey(DefaultsParams.SIGNATURE)
     }
 
-    def "Getting two times params has different time and signature"() {
+    def "Getting two times params has different time and signature and other params not changed"() {
         given:
         def requestBuilder = MyTradesRequest.builder("ETHBTC").limit(10).fromId(45).build()
         def timestampOne = 1500100900
         def timestampTwo = 1500100901
-        def binanceTime = Stub(BinanceTime.class)
+        def binanceTime = Stub(IBinanceTime.class)
         def binanceSecretKey = new BinanceSecretKey("secret".toCharArray())
         when:
         binanceTime.getBinanceTime() >>> [timestampOne, timestampTwo]
-        def paramsFirstInvoke = requestBuilder.getParamsWithSignatureAndForCurrentTime(binanceSecretKey, binanceTime)
-        def paramsSecondInvoke = requestBuilder.getParamsWithSignatureAndForCurrentTime(binanceSecretKey, binanceTime)
+        def paramsFirstInvoke = requestBuilder.getParamsWithSignature(binanceSecretKey, binanceTime)
+        def paramsSecondInvoke = requestBuilder.getParamsWithSignature(binanceSecretKey, binanceTime)
         then:
         //symbol, recvWindow(default), timestamp, signature, limit, fromId
         assert paramsFirstInvoke.size() == 6

@@ -3,10 +3,10 @@ package pl.km.binance.api.domain.request;
 import lombok.Builder;
 import pl.km.binance.api.domain.exchange.general.Symbol;
 import pl.km.binance.api.domain.request.secured.SecuredRequest;
-import pl.km.binance.api.domain.request.secured.SecuredRequestQueryParams;
+import pl.km.binance.api.domain.request.secured.ISecuredRequestQueryParams;
 import pl.km.binance.api.domain.request.secured.TimingSecurityRequest;
-import pl.km.binance.api.domain.security.BinanceSecretKey;
-import pl.km.binance.api.domain.time.BinanceTime;
+import pl.km.binance.api.domain.security.ISecretKey;
+import pl.km.binance.api.domain.time.IBinanceTime;
 
 import java.util.LinkedHashMap;
 import java.util.Objects;
@@ -14,7 +14,7 @@ import java.util.Objects;
 /**
  * Request for GET /myTrades endpoint
  */
-public class MyTradesRequest implements SecuredRequestQueryParams {
+public class MyTradesRequest implements ISecuredRequestQueryParams {
     private final Symbol symbol;
     private Long startTime;
     private Long endTime;
@@ -64,8 +64,14 @@ public class MyTradesRequest implements SecuredRequestQueryParams {
         this.securedRequest = new SecuredRequest();
     }
 
+    /**
+     *
+     * @param secretKey
+     * @param binanceTime
+     * @return
+     */
     @Override
-    public LinkedHashMap<String, String> getParamsWithSignatureAndForCurrentTime(BinanceSecretKey binanceSecretKey, BinanceTime binanceTime) {
+    public LinkedHashMap<String, String> getParamsWithSignature(ISecretKey secretKey, IBinanceTime binanceTime) {
         securedRequest.addQueryParam(DefaultsParams.SYMBOL, symbol.getSymbolName());
         securedRequest.addQueryParams(timingSecurityRequest.getTimeParamsForNow(binanceTime));
         if (Objects.nonNull(this.startTime)) {
@@ -80,12 +86,12 @@ public class MyTradesRequest implements SecuredRequestQueryParams {
         if (Objects.nonNull(this.limit)) {
             securedRequest.addQueryParam(DefaultsParams.LIMIT, this.limit.toString());
         }
-        securedRequest.addSignature(binanceSecretKey, this);
-        return securedRequest.getQueryParams();
+        securedRequest.addSignature(secretKey, this);
+        return securedRequest.getParams();
     }
 
     @Override
-    public byte[] getRequestQueryParamsStringUrlBytes() {
-        return securedRequest.getRequestQueryParamsStringUrlBytes();
+    public String getUrlPathParams() {
+        return securedRequest.getUrlPathParams();
     }
 }

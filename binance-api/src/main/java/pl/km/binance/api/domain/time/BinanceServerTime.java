@@ -1,11 +1,16 @@
 package pl.km.binance.api.domain.time;
 
+import io.vavr.control.Try;
+import lombok.extern.slf4j.Slf4j;
 import pl.km.binance.api.infrastructure.BinanceApiRest;
+
+import java.util.Objects;
 
 /**
  * Time of Binance Server
  */
-public class BinanceServerTime implements BinanceTime {
+@Slf4j
+public class BinanceServerTime implements IBinanceTime {
     /**
      * Difference between the Binance API server time and local time
      */
@@ -33,8 +38,16 @@ public class BinanceServerTime implements BinanceTime {
      * Synchronizing the Binance API server time by computing difference between local and Binance time
      */
     public void synchronizeBinanceTime() {
-        this.timeDifference = System.currentTimeMillis() - binanceApiRest.serverTime().getServerTime();
+        this.timeDifference = System.currentTimeMillis() - getServerTimeOrDefault();
     }
 
+    private long getServerTimeOrDefault() {
+        return Try.of(this::getServerTime)
+                .onFailure(exc -> log.error("Cannot get Binance server time: {}", exc.getMessage()))
+                .getOrElse(0L);
+    }
 
+    private long getServerTime() {
+        return Objects.requireNonNull(binanceApiRest.serverTime().getBody()).getServerTime();
+    }
 }

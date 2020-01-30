@@ -1,8 +1,8 @@
 package pl.km.binance.api.domain.request.secured;
 
 import pl.km.binance.api.domain.request.DefaultsParams;
-import pl.km.binance.api.domain.security.BinanceSecretKey;
 import pl.km.binance.api.domain.security.HmacSha256Singer;
+import pl.km.binance.api.domain.security.ISecretKey;
 
 import java.util.LinkedHashMap;
 
@@ -16,7 +16,7 @@ public class SecuredRequest {
         this.queryParams = new LinkedHashMap<>();
     }
 
-    public LinkedHashMap<String, String> getQueryParams() {
+    public LinkedHashMap<String, String> getParams() {
         return new LinkedHashMap<>(queryParams);
     }
 
@@ -38,30 +38,41 @@ public class SecuredRequest {
     }
 
     /**
-     * @return byte[] of params presented as: filed1=valueField1&field2=valueField2
+     * @return String of params presented as: filed1=valueField1&field2=valueField2
      */
-    public byte[] getRequestQueryParamsStringUrlBytes() {
-        StringBuilder sb = new StringBuilder();
-        LinkedHashMap<String, String> params = this.queryParams;
-        int paramsSize = params.size() - 1;
-        int[] paramIndex = new int[1];
-        params.forEach((keyName, value) -> {
-            sb.append(keyName).append("=").append(value);
-            if (paramIndex[0] < paramsSize) {
-                sb.append(DefaultsParams.QUERY_PARAMS_SEPARATOR);
-            }
-            paramIndex[0]++;
+    public String getUrlPathParams() {
+        var sb = new StringBuilder();
+        var paramsSize = this.queryParams.size() - 1;
+        var paramIndex = new int[1];
+        this.queryParams.forEach((keyName, value) -> {
+            composeAndAddParam(sb, keyName, value);
+            addSeparatorIfNotLast(sb, paramsSize, paramIndex);
         });
-        return sb.toString().getBytes();
+        return sb.toString();
+    }
+
+    private void composeAndAddParam(StringBuilder sb, String keyName, String value) {
+        sb.append(keyName).append("=").append(value);
+    }
+
+    private void addSeparatorIfNotLast(StringBuilder sb, int paramsSize, int[] paramIndex) {
+        if (isNotLastElement(paramsSize, paramIndex[0])) {
+            sb.append(DefaultsParams.QUERY_PARAMS_SEPARATOR);
+        }
+        paramIndex[0]++;
+    }
+
+    private boolean isNotLastElement(int paramsSize, int paramIndex) {
+        return paramIndex < paramsSize;
     }
 
     /**
      * Signing request params and adding signature query param
      *
-     * @param binanceSecretKey for signing purposes
+     * @param secretKey for signing purposes
      */
-    public void addSignature(BinanceSecretKey binanceSecretKey, SecuredRequestQueryParams requestParams) {
-        String signature = HmacSha256Singer.sing(binanceSecretKey, requestParams);
+    public void addSignature(ISecretKey secretKey, ISecuredRequestQueryParams requestParams) {
+        String signature = HmacSha256Singer.sing(secretKey, requestParams);
         this.queryParams.put(DefaultsParams.SIGNATURE, signature);
     }
 }
