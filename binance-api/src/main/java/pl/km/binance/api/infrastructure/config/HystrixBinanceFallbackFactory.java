@@ -11,16 +11,16 @@ import pl.km.binance.api.domain.exchange.account.AccountInfo;
 import pl.km.binance.api.domain.exchange.account.Trades;
 import pl.km.binance.api.domain.exchange.general.ExchangeInfo;
 import pl.km.binance.api.domain.exchange.general.ServerTime;
-import pl.km.binance.api.infrastructure.BinanceApiRestFeignClient;
+import pl.km.binance.api.infrastructure.IBinanceApClientRest;
 
 import java.util.List;
 import java.util.Map;
 
 //todo either?
-public class HystrixBinanceFallbackFactory implements FallbackFactory<BinanceApiRestFeignClient> {
+public class HystrixBinanceFallbackFactory implements FallbackFactory<IBinanceApClientRest> {
     @Override
-    public BinanceApiRestFeignClient create(Throwable cause) {
-        return new BinanceApiRestFeignClient() {
+    public IBinanceApClientRest create(Throwable cause) {
+        return new IBinanceApClientRest() {
             @Override
             public ResponseEntity<Object> ping() {
                 decomposeException(cause);
@@ -55,16 +55,12 @@ public class HystrixBinanceFallbackFactory implements FallbackFactory<BinanceApi
 
     private static ResponseEntity decomposeException(Throwable cause) {
         if (cause instanceof BinanceInvokeError) {
-//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorResponse(cause.getMessage()));
             throw new ErrorExceptionResponse(HttpStatus.BAD_REQUEST, cause.getMessage());
         } else if (cause instanceof HystrixTimeoutException) {
             throw new ErrorExceptionResponse(HttpStatus.REQUEST_TIMEOUT, cause.getMessage());
-//            return ResponseEntity.status(HttpStatus.REQUEST_TIMEOUT).body(new ErrorResponse(cause.getMessage()));
         } else if (cause instanceof FeignException) {
             throw new ErrorExceptionResponse(HttpStatus.SERVICE_UNAVAILABLE, cause.getMessage());
-//            return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(new ErrorResponse(cause.getMessage()));
         }
         throw new ErrorExceptionResponse(HttpStatus.INTERNAL_SERVER_ERROR, cause.getMessage());
-//        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ErrorResponse(cause.getMessage()));
     }
 }

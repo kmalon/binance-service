@@ -1,8 +1,8 @@
 package pl.km.binance.api.domain.request.secured;
 
 import pl.km.binance.api.domain.request.DefaultsParams;
-import pl.km.binance.api.domain.security.HmacSha256Singer;
 import pl.km.binance.api.domain.security.ISecretKey;
+import pl.km.binance.api.security.ISecuritySigner;
 
 import java.util.LinkedHashMap;
 
@@ -72,7 +72,7 @@ public class SecuredRequest {
      * @param secretKey for signing purposes
      */
     public void addSignature(ISecretKey secretKey, ISecuredRequestQueryParams requestParams) {
-        String signature = HmacSha256Singer.sing(secretKey, requestParams);
+        String signature = ISecuritySigner.sign(secretKey, requestParams);
         this.queryParams.put(DefaultsParams.SIGNATURE, signature);
     }
 }

@@ -2,7 +2,7 @@ package pl.km.binance.api.domain.time;
 
 import io.vavr.control.Try;
 import lombok.extern.slf4j.Slf4j;
-import pl.km.binance.api.infrastructure.BinanceApiRest;
+import pl.km.binance.api.client.IBinanceApiRest;
 
 import java.util.Objects;
 
@@ -18,10 +18,10 @@ public class BinanceServerTime implements IBinanceTime {
     /**
      * Binance REST API client for time synchronization
      */
-    private BinanceApiRest binanceApiRest;
+    private IBinanceApiRest IBinanceApiRest;
 
-    public BinanceServerTime(BinanceApiRest binanceApiRest) {
-        this.binanceApiRest = binanceApiRest;
+    public BinanceServerTime(IBinanceApiRest IBinanceApiRest) {
+        this.IBinanceApiRest = IBinanceApiRest;
         synchronizeBinanceTime();
     }
 
@@ -48,6 +48,6 @@ public class BinanceServerTime implements IBinanceTime {
     }
 
     private long getServerTime() {
-        return Objects.requireNonNull(binanceApiRest.serverTime().getBody()).getServerTime();
+        return Objects.requireNonNull(IBinanceApiRest.serverTime().getBody()).getServerTime();
     }
 }

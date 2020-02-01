@@ -14,8 +14,8 @@ import pl.km.binance.api.domain.exchange.general.ServerTime;
 import pl.km.binance.api.domain.request.AccountRequest;
 import pl.km.binance.api.domain.request.MyTradesRequest;
 import pl.km.binance.api.domain.security.BinanceSecretKey;
-import pl.km.binance.api.infrastructure.BinanceApiRest;
-import pl.km.binance.api.infrastructure.BinanceApiRestClient;
+import pl.km.binance.api.client.IBinanceApiRest;
+import pl.km.binance.api.client.BinanceApiRestClient;
 
 import java.util.List;
 
@@ -24,21 +24,21 @@ import java.util.List;
 @RequestMapping("/public")
 public class ClientController {
 
-    private BinanceApiRest binanceApiRest;
+    private IBinanceApiRest IBinanceApiRest;
 
     public ClientController(@Value("${binance.api.base-url}${binance.api.uri-prefix-with-version}") String binanceBaseUrl) {
-        this.binanceApiRest = new BinanceApiRestClient(binanceBaseUrl,6000,6000);
+        this.IBinanceApiRest = new BinanceApiRestClient(binanceBaseUrl,6000,6000);
     }
 
     @GetMapping(path = "/noauth")
     public ResponseEntity<AccountInfo> test(@RequestParam("api-key") String key, @RequestParam("sec-key") char[] seckey) {
         log.info("User not authenticated");
         BinanceSecretKey binanceSecretKey = new BinanceSecretKey(seckey);
-        ResponseEntity<Void> ping = binanceApiRest.ping();
-        ResponseEntity<ServerTime> objectResponseEntity = binanceApiRest.serverTime();
-        ResponseEntity<ExchangeInfo> exchangeInfoResponseEntity = binanceApiRest.exchangeInfo();
-        ResponseEntity<AccountInfo> accountInfo = binanceApiRest.getAccountInfo(binanceSecretKey, key, new AccountRequest());
-        ResponseEntity<List<Trades>> userTrades = binanceApiRest.getUserTrades(binanceSecretKey, key, new MyTradesRequest("ETHBTC"));
+        ResponseEntity<Void> ping = IBinanceApiRest.ping();
+        ResponseEntity<ServerTime> objectResponseEntity = IBinanceApiRest.serverTime();
+        ResponseEntity<ExchangeInfo> exchangeInfoResponseEntity = IBinanceApiRest.exchangeInfo();
+        ResponseEntity<AccountInfo> accountInfo = IBinanceApiRest.getAccountInfo(binanceSecretKey, key, new AccountRequest());
+        ResponseEntity<List<Trades>> userTrades = IBinanceApiRest.getUserTrades(binanceSecretKey, key, new MyTradesRequest("ETHBTC"));
         binanceSecretKey.destroy();
 
         return accountInfo;
