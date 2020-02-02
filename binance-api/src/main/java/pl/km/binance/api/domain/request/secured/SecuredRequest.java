@@ -6,7 +6,7 @@ import pl.km.binance.api.security.ISecuritySigner;
 
 import java.util.LinkedHashMap;
 
-public class SecuredRequest {
+public class SecuredRequest implements ISecuredRequest {
     /**
      * Request params in order of putting in
      */
@@ -71,8 +71,10 @@ public class SecuredRequest {
      *
      * @param secretKey for signing purposes
      */
-    public void addSignature(ISecretKey secretKey, ISecuredRequestQueryParams requestParams) {
-        String signature = ISecuritySigner.sign(secretKey, requestParams);
-        this.queryParams.put(DefaultsParams.SIGNATURE, signature);
+    public LinkedHashMap<String, String> getParamsWithSignature(ISecretKey secretKey, ISignedRequest signedRequest) {
+        String signature = ISecuritySigner.sign(secretKey, signedRequest);
+        var paramsWithSignature = getParams();
+        paramsWithSignature.put(DefaultsParams.SIGNATURE, signature);
+        return paramsWithSignature;
     }
 }

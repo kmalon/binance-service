@@ -2,21 +2,27 @@ package pl.km.client.binance.domain.request
 
 import pl.km.binance.api.domain.request.DefaultsParams
 import pl.km.binance.api.domain.request.secured.TimingSecurityRequest
-import pl.km.binance.api.domain.time.IBinanceTime
+import pl.km.client.binance.domain.request.config.TestBinanceTime
 import spock.lang.Specification
 import spock.lang.Unroll
 
 class TimingSecurityRequestTest extends Specification {
 
-    def binanceTime = Stub(IBinanceTime.class)
-    def timestamp = 1500100900
+    def binanceTime
+    def timestamp
+
+    void setup() {
+        binanceTime = new TestBinanceTime()
+        timestamp = 1500100900
+        binanceTime.setBinanceTime(timestamp)
+    }
+
 
     @Unroll
     def "All fields are properly filled"() {
         given:
         def timingSecurityRequest = new TimingSecurityRequest(recvWindow as long)
         when:
-        binanceTime.getBinanceTime() >> timestamp as Long
         def params = timingSecurityRequest.getTimeParamsForNow(binanceTime)
         then:
         params.get(DefaultsParams.RECV_WINDOW) as Long == recvWindowSet
@@ -33,7 +39,6 @@ class TimingSecurityRequestTest extends Specification {
         given:
         def timingSecurityRequest = new TimingSecurityRequest(DefaultsParams.RECV_WINDOW_DEFAULT)
         when:
-        binanceTime.getBinanceTime() >> timestamp
         def params = timingSecurityRequest.getTimeParamsForNow(binanceTime)
         then:
         assert params.containsKey(DefaultsParams.TIMESTAMP)

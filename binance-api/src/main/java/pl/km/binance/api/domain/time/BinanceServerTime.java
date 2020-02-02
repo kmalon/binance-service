@@ -31,14 +31,14 @@ public class BinanceServerTime implements IBinanceTime {
      * @return millis of Binance server
      */
     public long getBinanceTime() {
-        return System.currentTimeMillis() + timeDifference;
+        return TimeProvider.getSystemMilis() + timeDifference;
     }
 
     /**
      * Synchronizing the Binance API server time by computing difference between local and Binance time
      */
     public void synchronizeBinanceTime() {
-        this.timeDifference = System.currentTimeMillis() - getServerTimeOrDefault();
+        this.timeDifference = TimeProvider.getSystemMilis() - getServerTimeOrDefault();
     }
 
     private long getServerTimeOrDefault() {

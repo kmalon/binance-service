@@ -11,7 +11,7 @@ import java.util.Objects;
  * Contains needed parameters for signed endpoints with timing security
  */
 @Slf4j
-public class TimingSecurityRequest {
+public class TimingSecurityRequest implements ITimingSecurity {
     /**
      * Specify the number of milliseconds after serverTime the request is valid for.
      * Not mandatory account information request param - default 5000ms.

@@ -6,12 +6,12 @@ import pl.km.binance.api.domain.time.IBinanceTime;
 import java.util.LinkedHashMap;
 
 /**
- * Request params used for secured endpoints where signature is required
+ * Request used for secured endpoints where signature is required
  */
-public interface ISecuredRequestQueryParams {
+public interface ISignedRequest {
 
     /**
-     * @return request query params with signature and for time set to current time
+     * @return request query params with signature for current time
      */
     LinkedHashMap<String, String> getParamsWithSignature(ISecretKey secretKey, IBinanceTime binanceTime);
 

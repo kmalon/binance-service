@@ -5,18 +5,23 @@ import pl.km.binance.api.domain.request.AccountRequest
 import pl.km.binance.api.domain.request.DefaultsParams
 import pl.km.binance.api.domain.security.BinanceSecretKey
 import pl.km.binance.api.domain.time.IBinanceTime
+import pl.km.client.binance.domain.request.config.TestBinanceTime
 import spock.lang.Specification
 
 class AccountRequestTest extends Specification {
 
+    def binanceTime
+
+    void setup() {
+        binanceTime = new TestBinanceTime()
+        binanceTime.setBinanceTime(1500100900)
+    }
+
     def "New created instance has required params"() {
         given:
         def request = new AccountRequest(13)
-        def timestamp = 1500100900
-        def binanceTime = Stub(IBinanceTime.class)
         def binanceSecretKey = new BinanceSecretKey("secret".toCharArray())
         when:
-        binanceTime.getBinanceTime() >> timestamp
         def params = request.getParamsWithSignature(binanceSecretKey, binanceTime)
         then:
 //        timestamp, recvWindow, signature
@@ -29,13 +34,14 @@ class AccountRequestTest extends Specification {
     def "Getting two times params - different timestamp and signature - params size not changing"() {
         given:
         def request = new AccountRequest(13)
-        def timestampOne = 1500100900
-        def timestampTwo = 1500100901
-        def binanceTime = Stub(IBinanceTime.class)
+//        def timestampOne = 1500100900
+//        def timestampTwo = 1500100901
+//        def binanceTime = Stub(IBinanceTime.class)
         def binanceSecretKey = new BinanceSecretKey("secret".toCharArray())
         when:
-        binanceTime.getBinanceTime() >>> [timestampOne, timestampTwo]
+//        binanceTime.getBinanceTime() >>> [timestampOne, timestampTwo]
         def paramsFirstInvoke = request.getParamsWithSignature(binanceSecretKey, binanceTime)
+        binanceTime.setBinanceTime(1500100901)
         def paramsSecondInvoke = request.getParamsWithSignature(binanceSecretKey, binanceTime)
         then:
 //        timestamp, recvWindow, signature
