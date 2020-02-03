@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import pl.km.binance.api.client.BinanceApiRestClient;
+import pl.km.binance.api.client.IBinanceApiRest;
 import pl.km.binance.api.domain.exchange.account.AccountInfo;
 import pl.km.binance.api.domain.exchange.account.Trades;
 import pl.km.binance.api.domain.exchange.general.ExchangeInfo;
@@ -14,8 +16,6 @@ import pl.km.binance.api.domain.exchange.general.ServerTime;
 import pl.km.binance.api.domain.request.AccountRequest;
 import pl.km.binance.api.domain.request.MyTradesRequest;
 import pl.km.binance.api.domain.security.BinanceSecretKey;
-import pl.km.binance.api.client.IBinanceApiRest;
-import pl.km.binance.api.client.BinanceApiRestClient;
 
 import java.util.List;
 
@@ -27,7 +27,7 @@ public class ClientController {
     private IBinanceApiRest IBinanceApiRest;
 
     public ClientController(@Value("${binance.api.base-url}${binance.api.uri-prefix-with-version}") String binanceBaseUrl) {
-        this.IBinanceApiRest = new BinanceApiRestClient(binanceBaseUrl,6000,6000);
+        this.IBinanceApiRest = new BinanceApiRestClient(binanceBaseUrl, 6000, 6000);
     }
 
     @GetMapping(path = "/noauth")
