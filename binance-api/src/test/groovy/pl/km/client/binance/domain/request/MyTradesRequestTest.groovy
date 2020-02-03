@@ -10,12 +10,10 @@ class MyTradesRequestTest extends Specification {
 
     def binanceTime
 
-
     void setup() {
         binanceTime = new TestBinanceTime()
         binanceTime.setBinanceTime(1500100900)
     }
-
 
     def "Should construct MyTradesRequest with at least symbol param and needed params"() {
         given:

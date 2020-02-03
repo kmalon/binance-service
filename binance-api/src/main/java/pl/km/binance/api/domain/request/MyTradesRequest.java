@@ -48,10 +48,7 @@ public class MyTradesRequest implements ISignedRequest {
     }
 
     public MyTradesRequest(Long recvWindow, String symbol) {
-        this.timingSecurity = new TimingSecurityRequest(recvWindow);
-        this.symbol = new Symbol(symbol);
-        this.securedRequest = new SecuredRequest();
-        this.fillQueryParams();
+        this(symbol, recvWindow, null, null, null, null);
     }
 
     private void fillQueryParams() {
@@ -84,21 +81,6 @@ public class MyTradesRequest implements ISignedRequest {
     @Override
     public String getUrlPathParams() {
         return securedRequest.getUrlPathParams();
-    }
-
-    public static class MyTradesRequestBuilder {
-        String symbolName;
-        Long recvWindow;
-        Long startTime;
-        Long endTime;
-        Long fromId;
-        Integer limit;
-
-        public MyTradesRequest build() {
-            var myTradesRequest = new MyTradesRequest(symbolName, recvWindow, startTime, endTime, fromId, limit);
-            myTradesRequest.fillQueryParams();
-            return myTradesRequest;
-        }
     }
 
     /**
