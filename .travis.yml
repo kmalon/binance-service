@@ -1,1 +1,7 @@
 language: java
+notifications:
+  slack:
+    rooms:
+      - secure: "gODpm/8tLdphIC8wbrgIiDajqcSo5f5mFVp2t87w7zzOjdp91+FMjGSVfNuemkTBSxovikFO+Rr/CPtiJwshxBHRePAWouMDNJv7AAHExby2w2cHopgiYO1d/0uxR6w9v4JIaH48hurBHv46qrvYrUdEZESHJxKYmUfRvrPYHkDZTty+i6hUqfHIFthHZf3Jb4M6Omrk2AiUc/gCKw4+R4G28UNa5a7tb7Gq3vf8SX3pV0rHsEOPCSH1uiAgUHdirGTVal1WpfZz9a5Cq3gxrieRDSXPpYWbb3Vb+xwRoV6GAz2QHpn7H2eJPk2zY9tm40pF7nO9LZ/KGJDxtB6QipHwQmysABJVQ47fVRd7O7qjqFn7wvVynUWl8ZG0LEHBO1odZZpOoSPwVgE8IgyaD6a/T73HGVtwI5sgSpz6KbbsKa9QGhY41fE6bnYyj2l/464MUZoTwNtn3UyVXCb9Y5Vms/pZ/mDPkfkDtGfQUmoLBdM4GNOKXUvVZR4W/j/QCpSplVfaIAbd1ylIesll/pA6y7AI+eXH26I7PJQQ2gfYe8cESjwjJJ9cAl5q1mpLOYigtY45ta54SCLFBcjrSjtSyfbwGGwXR357dil+khicvr3lHh7YV1ou1kf8tFtf6q/JEAQfysRvcInb8BT4/TwjR1eyNidCmKvRFLeKZFc="
+    on_success: always
+    on_failure: always
