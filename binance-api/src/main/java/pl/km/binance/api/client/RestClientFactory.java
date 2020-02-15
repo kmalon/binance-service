@@ -27,6 +27,6 @@ class RestClientFactory {
                         .andCommandPropertiesDefaults(executionTimeoutSetter))
                 .errorDecoder(new BinanceErrorDecoder())
                 .options(new Request.Options(connectTimeoutMillis, readTimeoutMillis))
-                .target(IBinanceApClientRest.class, binanceBaseUrl, new HystrixBinanceFallbackFactory());
+                .target(IBinanceApClientRest.class, binanceBaseUrl);
     }
 }

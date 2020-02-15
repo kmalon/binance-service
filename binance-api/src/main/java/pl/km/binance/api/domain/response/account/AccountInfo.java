@@ -20,7 +20,6 @@ public class AccountInfo {
     private String accountType;
     private List<Balance> balances;
 
-//    todo test
     public void setBalances(List<Balance> balances) {
         this.balances = balances.stream().filter(isNotEqualToZero()).collect(Collectors.toList());
     }

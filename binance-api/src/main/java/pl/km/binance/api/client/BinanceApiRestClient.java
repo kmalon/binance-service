@@ -2,14 +2,14 @@ package pl.km.binance.api.client;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import pl.km.binance.api.domain.request.AccountRequest;
+import pl.km.binance.api.domain.request.AllOrderList;
+import pl.km.binance.api.domain.request.ISecretKey;
+import pl.km.binance.api.domain.request.MyTradesRequest;
 import pl.km.binance.api.domain.response.account.AccountInfo;
 import pl.km.binance.api.domain.response.account.Trades;
 import pl.km.binance.api.domain.response.general.ExchangeInfo;
 import pl.km.binance.api.domain.response.general.ServerTime;
-import pl.km.binance.api.domain.request.AccountRequest;
-import pl.km.binance.api.domain.request.AllOrderList;
-import pl.km.binance.api.domain.request.MyTradesRequest;
-import pl.km.binance.api.domain.request.ISecretKey;
 
 import java.util.List;
 

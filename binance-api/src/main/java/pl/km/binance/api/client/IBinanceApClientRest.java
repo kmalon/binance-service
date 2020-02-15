@@ -37,7 +37,6 @@ interface IBinanceApClientRest {
     @RequestMapping(value = BinanceApiRestMappings.ACCOUNT_INFORMATIONS, method = RequestMethod.GET)
     ResponseEntity<AccountInfo> getAccountInfo(@SpringQueryMap Map<String, ?> params, @RequestHeader(value = BinanceApiHeaders.X_MBX_APIKEY) String apiKey);
 
-    //    todo wydzielic do oddzielnego interface??? i ten bedzie go rozszezal ? czy to zadziala
     @RequestMapping(value = BinanceApiRestMappings.MY_TRADES, method = RequestMethod.GET)
     ResponseEntity<List<Trades>> getUserTrades(@SpringQueryMap Map<String, ?> params, @RequestHeader(value = BinanceApiHeaders.X_MBX_APIKEY) String apiKey);
 
