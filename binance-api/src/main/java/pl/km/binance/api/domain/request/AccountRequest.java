@@ -1,9 +1,7 @@
 package pl.km.binance.api.domain.request;
 
 import lombok.extern.slf4j.Slf4j;
-import pl.km.binance.api.domain.request.secured.*;
-import pl.km.binance.api.domain.security.ISecretKey;
-import pl.km.binance.api.domain.time.IBinanceTime;
+import pl.km.binance.api.client.IBinanceTime;
 
 import java.util.LinkedHashMap;
 

@@ -1,10 +1,8 @@
 package pl.km.binance.api.domain.request;
 
 import lombok.Builder;
-import pl.km.binance.api.domain.exchange.general.Symbol;
-import pl.km.binance.api.domain.request.secured.*;
-import pl.km.binance.api.domain.security.ISecretKey;
-import pl.km.binance.api.domain.time.IBinanceTime;
+import pl.km.binance.api.client.IBinanceTime;
+import pl.km.binance.api.domain.response.general.Symbol;
 
 import java.util.LinkedHashMap;
 import java.util.Objects;

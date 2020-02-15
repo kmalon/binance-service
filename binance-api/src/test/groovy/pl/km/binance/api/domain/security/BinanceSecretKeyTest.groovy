@@ -1,18 +1,18 @@
-package pl.km.binance.api.domain.security
+package pl.km.binance.api.domain.securitySeck
 
 import org.bouncycastle.util.Strings
+import pl.km.binance.api.domain.request.BinanceSecretKey
 import spock.lang.Specification
 
 class BinanceSecretKeyTest extends Specification {
-    def "Check if created BinanceSecretKey is properly cleared"() {
+    def "Should properly clear BinanceSecretKey"() {
         given:
         def secretKey = new BinanceSecretKey("secret".toCharArray())
-        expect:
+        expect: "toString method of Key must not return secret and secret should be returned after invoke proper method"
         secretKey.toString() != "secret"
-        secretKey.getKey() == "secret".toCharArray()
-        secretKey.toBytes() == Strings.toUTF8ByteArray("secret".toCharArray())
+        secretKey.getKey() == Strings.toUTF8ByteArray("secret".toCharArray())
+        and: "After destroy key must be removed from memory"
         secretKey.destroy()
-        secretKey.getKey() != "secret".toCharArray()
-        secretKey.toBytes() != Strings.toUTF8ByteArray("secret".toCharArray())
+        secretKey.getKey() != Strings.toUTF8ByteArray("secret".toCharArray())
     }
 }

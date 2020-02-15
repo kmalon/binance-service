@@ -3,8 +3,7 @@ package pl.km.client.binance.domain.request
 
 import pl.km.binance.api.domain.request.AccountRequest
 import pl.km.binance.api.domain.request.DefaultsParams
-import pl.km.binance.api.domain.security.BinanceSecretKey
-import pl.km.binance.api.domain.time.IBinanceTime
+import pl.km.binance.api.domain.request.BinanceSecretKey
 import pl.km.client.binance.domain.request.config.TestBinanceTime
 import spock.lang.Specification
 

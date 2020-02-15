@@ -2,7 +2,7 @@ package pl.km.client.binance.domain.request
 
 import pl.km.binance.api.domain.request.DefaultsParams
 import pl.km.binance.api.domain.request.MyTradesRequest
-import pl.km.binance.api.domain.security.BinanceSecretKey
+import pl.km.binance.api.domain.request.BinanceSecretKey
 import pl.km.client.binance.domain.request.config.TestBinanceTime
 import spock.lang.Specification
 
@@ -59,7 +59,6 @@ class MyTradesRequestTest extends Specification {
         assert !params.containsKey(DefaultsParams.LIMIT)
         assert params.containsKey(DefaultsParams.SIGNATURE)
     }
-
 
     def "Should return not changed params expect timestamp and signature after second invoke"() {
         given:

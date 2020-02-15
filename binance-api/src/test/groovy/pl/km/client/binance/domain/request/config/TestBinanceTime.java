@@ -1,6 +1,6 @@
 package pl.km.client.binance.domain.request.config;
 
-import pl.km.binance.api.domain.time.IBinanceTime;
+import pl.km.binance.api.client.IBinanceTime;
 
 public class TestBinanceTime implements IBinanceTime {
 
