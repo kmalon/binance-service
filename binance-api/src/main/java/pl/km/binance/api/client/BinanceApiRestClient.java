@@ -13,12 +13,17 @@ import pl.km.binance.api.domain.response.general.ServerTime;
 
 import java.util.List;
 
+
 public class BinanceApiRestClient implements IBinanceApiRest {
 
     private IBinanceApClientRest binanceApClient;
     private IBinanceTime binanceServerTime;
 
-    public BinanceApiRestClient(String binanceBaseUrl, int connectTimeoutMillis, int readTimeoutMillis) {
+    public static BinanceApiRestClient newInstance(String binanceBaseUrl, int connectTimeoutMillis, int readTimeoutMillis) {
+        return new BinanceApiRestClient(binanceBaseUrl, connectTimeoutMillis, readTimeoutMillis);
+    }
+
+    private BinanceApiRestClient(String binanceBaseUrl, int connectTimeoutMillis, int readTimeoutMillis) {
         this.binanceApClient = RestClientFactory.newInstance(binanceBaseUrl, connectTimeoutMillis, readTimeoutMillis);
         this.binanceServerTime = new BinanceServerTime(this);
     }

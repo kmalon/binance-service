@@ -11,6 +11,8 @@ binance:
   api:
     base-url: https://api.binance.com
     uri-prefix-with-version: /api/v3
+    connection-timeout-millis: 6000
+    read-timeout-millis: 6000
 management:
   endpoint:
     metrics:

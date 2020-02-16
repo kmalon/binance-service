@@ -27,7 +27,7 @@ class ClientController {
     private IBinanceApiRest IBinanceApiRest;
 
     ClientController(@Value("${binance.api.base-url}${binance.api.uri-prefix-with-version}") String binanceBaseUrl) {
-        this.IBinanceApiRest = new BinanceApiRestClient(binanceBaseUrl, 6000, 6000);
+        this.IBinanceApiRest = BinanceApiRestClient.newInstance(binanceBaseUrl, 6000, 6000);
     }
 
     @GetMapping(path = "/noauth")
